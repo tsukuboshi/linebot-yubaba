@@ -7,12 +7,15 @@ This repository contains codes to deploy yubaba line bot.
 
 &emsp;
 
+## Diagram
+![Diagram](./images/linebot-yubaba.png)
+
 ## Required
 
 - Channel (Line Messaging API)
 - AWS CLI
 - SAM CLI
-- Docker(option)
+- Docker (only if you want to use the container when running sam build)
 
 &emsp;
 
