@@ -13,11 +13,11 @@ This repository contains codes to deploy yubaba line bot.
 - AWS Lambda(Python) / API Gateway
 - AWS CLI
 - SAM CLI
-- Docker
+- Docker(option)
 
 &emsp;
 
-## Parameter (Line Messaging API)
+## Parameters (Line Messaging API)
 - Use webhook : Enabled
 - Auto-reply messages : Disabled
 - Greeting messages : Enabled 
