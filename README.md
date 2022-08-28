@@ -9,8 +9,7 @@ This repository contains codes to deploy yubaba line bot.
 
 ## Required
 
-- Line Messaging API
-- AWS Lambda(Python) / API Gateway
+- Channel (Line Messaging API)
 - AWS CLI
 - SAM CLI
 - Docker(option)
