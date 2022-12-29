@@ -1,0 +1,16 @@
+{
+    "problemMatcher": [
+        {
+            "owner": "cfn-lint",
+            "pattern": [
+                {
+                    "regexp": "^(\\S+):(\\d+):(\\d+):(\\d+):(\\d+):([EWI]\\d+:.+)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "message": 6
+                }
+            ]
+        }
+    ]
+}
