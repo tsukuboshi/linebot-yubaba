@@ -33,4 +33,4 @@ jobs:
         run: echo "::add-matcher::.github/cfn-lint.json"
 
       - name: Lint by cfn-lint
-        run: cfn-lint *.yml -f parseable
+        run: cfn-lint *.yaml -f parseable
