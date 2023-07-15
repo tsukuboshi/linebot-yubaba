@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Yubaba Linebot
+
+Parameters:
+  DefaultKmsId:
+    Type: String
+  LineChannelAccessToken:
+    Type: String
+  LineChannelSecret:
+    Type: String
+
+Resources:
+  FunctionIamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: role-linebot-yubaba
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: policy-linebot-yubaba
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*"
+              - Effect: Allow
+                Action:
+                  - "ssm:GetParameter*"
+                Resource: !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*"
+              - Effect: Allow
+                Action:
+                  - "kms:Decrypt"
+                Resource: !Sub "arn:aws:kms:${AWS::Region}:${AWS::AccountId}:key/${DefaultKmsId}"
+
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: function-linebot-yubaba
+      CodeUri: function/
+      Handler: index.lambda_handler
+      Runtime: python3.9
+      Role: !GetAtt FunctionIamRole.Arn
+      Timeout: 60
+      Layers:
+        - arn:aws:lambda:ap-northeast-1:133490724326:layer:AWS-Parameters-and-Secrets-Lambda-Extension:4
+        - !Ref LineBotLayer
+      Environment:
+        Variables:
+          LINE_CHANNEL_ACCESS_TOKEN: !Ref LineChannelAccessToken
+          LINE_CHANNEL_SECRET: !Ref LineChannelSecret
+      Events:
+        API:
+          Type: Api
+          Properties:
+            Path: "/api_endpoint"
+            Method: "post"
+
+  LineBotLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: LineBot
+      ContentUri: layer/
+      CompatibleRuntimes:
+        - python3.9
+    Metadata:
+      BuildMethod: python3.9
+
+Outputs:
+  ApiEndpointURL:
+    Description: "API Endpoint URL"
+    Value:
+      !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/${ServerlessRestApi.Stage}/api_endpoint"
