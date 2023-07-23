@@ -8,13 +8,13 @@ LINEBotで湯婆婆が返答してくれます。
 
 ![diagram](./image/diagram.drawio.png)
 
-## SAMデプロイ方法
+## デプロイ方法
 
 1. [Messaging APIを始めよう \| LINE Developers](https://developers.line.biz/ja/docs/messaging-api/getting-started/)を参考に、LINE Developersコンソールでチャンネルを作成または追加する。  
 
 2. [チャネルアクセストークンを発行する \| LINE Developers](https://developers.line.biz/ja/docs/messaging-api/building-bot/#issue-a-channel-access-token)を参考に、チャンネルアクセストークンを発行
 
-3. AWSコンソールにログインし、以下の設定内容で、AWS Systems Manager Parameter Storeにチャンネルアクセストークン、及びチャンネルシークレットを各々保存  
+3. AWSコンソールにログインし、以下の設定内容で、AWS Systems Manager Parameter Storeにシークレット情報を各々保存  
 
 |名前|種類|値|
 |---|---|---|
